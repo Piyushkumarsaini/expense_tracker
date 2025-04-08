@@ -50,7 +50,7 @@ Tracks expenses:
 ### 🧾 `ExpenseCategory`
 Stores names of expense types (e.g. Food, Travel)
 
-### 💳 `PatmentMethod`
+### 💳 `PaymentMethod`
 Stores available payment methods (e.g. Cash, Card)
 
 ### 🎯 `Budget`
