@@ -44,7 +44,7 @@ Stores names of income types (e.g. Salary, Bonus)
 
 ### 💸 `Expense`
 Tracks expenses:
-- Linked to `User`, `ExpenseCategory`, `PatmentMethod`
+- Linked to `User`, `ExpenseCategory`, `PaymentMethod`
 - Contains `amount`, `category`, `payment_method`, `description`, `date`, `time`
 
 ### 🧾 `ExpenseCategory`
