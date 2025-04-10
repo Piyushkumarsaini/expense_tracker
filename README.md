@@ -33,57 +33,38 @@ A simple yet powerful Expense Tracker built with Django that allows users to man
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/Piyushkumarsaini/expense_tracker.git
+git clone https://github.com/Piyushkumarsaini/expense_teacker.git
 cd expense_teacker
-```
 
-2. **Create Virtual Environment**
-```venv
+Create Virtual Environment
 python -m venv venv
-```
-3. **Activate Virtual Environment**
-```venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-4. **Install Dependencies**
-```
+
+Install Dependencies
 pip install -r requirements.txt
-```
 
-5. **Run Migrations**
-```
+
+Run Migrations
 python manage.py makemigrations
 python manage.py migrate
-```
 
-6. **Run the Server**
-```
+Run the Server
 python manage.py runserver
-```
 
 
 
-## 📁 Project Structure
+📁 Project Structure
 
-```
-expense_tracker/
-├── expense_tracker/             # Project Configuration + Root Files
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py              # Project settings
-│   ├── urls.py                  # Root URL configuration
-│   └── wsgi.py
-
-├── expense/                     # Main App
+├── expense/                          # Main App
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── models.py                # All data models
+│   ├── models.py                     # All data models
 │   ├── tests.py
-│   ├── urls.py                  # App URL routing
-│   ├── view/                    # Views split by feature
-│   │   ├── budget.py
+│   ├── urls.py                       # URL routing
+│   ├── view/                         # Views folder (split by feature)
+│   │   ├── budget.py                 # Budget logic
 │   │   ├── changepassword.py
 │   │   ├── expense.py
 │   │   ├── expensecategory.py
@@ -95,13 +76,15 @@ expense_tracker/
 │   │   ├── totale.py
 │   │   └── __pycache__/
 │   └── __pycache__/
+│
+├── expense_tracker/                 # Project Configuration + Root Files
+│   ├── __init__.py
+│   ├── settings.py                  # Project settings
+│   ├── urls.py                      # Root URL configuration
+│   ├── db.sqlite3                   # SQLite Database
+│   ├── manage.py                    # Django manager script
+│   ├── venv/                        # Virtual Environment
+│   └── README.md                    # Project Documentation
 
-├── db.sqlite3                   # SQLite Database
-├── manage.py                    # Django manager script
-├── venv/                        # Virtual Environment
-├── screenshort/
-├── .gitignore
-├── API_DOCS.md                  # API Documentation
-├── requirements.txt             # Installed packages
-└── README.md                    # Project Overview
-```
+
+

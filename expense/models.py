@@ -39,7 +39,7 @@ class ExpenseCategory(models.Model):
         return self.expense_category
     
 
-class PaymentMethod(models.Model):
+class PatmentMethod(models.Model):
     payment_method = models.CharField(max_length=20)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class PaymentMethod(models.Model):
 class Expense(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     category_id = models.ForeignKey(ExpenseCategory,on_delete=models.SET_NULL, null=True)
-    payment_method_id = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
+    payment_method_id = models.ForeignKey(PatmentMethod, on_delete=models.SET_NULL, null=True)
     category = models.CharField(max_length=20)
     payment_method = models.CharField(max_length=20)
     amount = models.IntegerField()

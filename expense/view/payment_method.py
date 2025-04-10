@@ -27,23 +27,23 @@ from django.views import View
 #             return JsonResponse({'error': 'patment method not found'}, status=400)
 
 
-# @method_decorator(csrf_exempt,name='dispatch')
-# class PaymentMethodDetileAdd(View):
-#     def post(seld,request):
-#         try:
-#             data = json.loads(request.body)
-#         except json.JSONDecodeError:
-#             return JsonResponse({'error': 'invalid json data'}, status=400)
+@method_decorator(csrf_exempt,name='dispatch')
+class PaymentMethodDetileAdd(View):
+    def post(seld,request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'invalid json data'}, status=400)
 
-#         patment_method_name = data.get('name')
-#         if not patment_method_name:
-#             return JsonResponse({'error': 'categroy name required'}, status= 400)
+        patment_method_name = data.get('name')
+        if not patment_method_name:
+            return JsonResponse({'error': 'categroy name required'}, status= 400)
         
-#         save_patment_method_datiles = PatmentMethod.objects.create(
-#             patment_method=patment_method_name
-#             )
-#         save_patment_method_datiles.save()
-#         return JsonResponse({'message':'categroy added succssfully'}, status=201)
+        save_patment_method_datiles = PatmentMethod.objects.create(
+            patment_method=patment_method_name
+            )
+        save_patment_method_datiles.save()
+        return JsonResponse({'message':'categroy added succssfully'}, status=201)
 
     
         
