@@ -7,7 +7,7 @@ from .view.expense import *
 # from .view.incomecategory import *
 # from .view.payment_method import *
 from .view.changepassword import *
-from .view.totale import *
+from .view.total import *
 
 
 urlpatterns = [
@@ -22,6 +22,6 @@ urlpatterns = [
     path('expense/<int:user_id>',ExpenseDetail.as_view(), name='expense_show'),
     path('expense/<int:user_id>/delete/<int:expense_id>', ExpenseDetail.as_view(), name='expense_delete'),
     path('expense/<int:user_id>/update/<int:expense_id>', ExpenseDetail.as_view(), name='expense_update'),
-    path('total/<int:user_id>',Totale.as_view(), name='expense_add'),
+    path('total/<int:user_id>',Total.as_view(), name='expense_add'),
 
 ]

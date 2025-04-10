@@ -9,7 +9,7 @@ from django.db.models import Sum
 
 
 @method_decorator(csrf_exempt,name='dispatch')
-class Totale(View):
+class Total(View):
     def get(self,request,user_id):
         try:
             user = User.objects.get(id=user_id)

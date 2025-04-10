@@ -22,7 +22,8 @@ class IncomeDetail(View):
                     'user_id': income.user_id.id,
                     'amount': income.amount,
                     'category': income.category,
-                    'date': income.date
+                    'date': income.date,
+                    'time': income.time
                 }
                 income_list.append(income_data)
             
@@ -47,13 +48,13 @@ class IncomeDetail(View):
         if not amount:
              return JsonResponse({'error': 'Amount is required'}, status=400)
         
-        patment_method = data.get('patment_method')
-        if not patment_method:
-            return JsonResponse({'error': 'Patment Method is required'}, status= 400)
+        income_category = data.get('income_category')
+        if not income_category:
+            return JsonResponse({'error': 'Income Method is required'}, status= 400)
                 
         try:
             fetch_user = User.objects.get(id=user_id)
-            fetch_category = IncomeCategory.objects.get(id=patment_method)
+            fetch_category = IncomeCategory.objects.get(id=income_category)
         
             save_income_datiles = Income.objects.create(
                 user_id=fetch_user,
@@ -67,6 +68,8 @@ class IncomeDetail(View):
  
         except User.DoesNotExist:
             return JsonResponse({'error': 'User does not exist'}, status=400)
+        except IncomeCategory.DoesNotExist:
+            return JsonResponse({'error': 'Income category does not exist'}, status=400)
         
 
     def delete(self,request,user_id,income_id):
@@ -89,19 +92,32 @@ class IncomeDetail(View):
             data = json.loads(request.body.decode('utf-8'))
         except json.JSONDecodeError:
             return JsonResponse({'error': 'invalid json data'}, status=400)
+
+        amount = data.get('amount')      
+        income_category_id = data.get('income_category_id')
+   
         
         try:
             fetch_user = User.objects.get(id=user_id)
             fetch_income = Income.objects.get(id=income_id,user_id=fetch_user)
+            new_category = IncomeCategory.objects.get(id=income_category_id)
+            
 
-            fetch_income.amount = data.get('amount',fetch_income.amount)
-            fetch_income.category = data.get('source',fetch_income.category)
+            # update_income_datiles = Income(
+            #     category_id=fetch_income,
+            #     amount=amount,
+            #     )
+            fetch_income.amount = amount
+            fetch_income.category_id = new_category
+            fetch_income.category = new_category.income_category
 
             fetch_income.save()
-            return JsonResponse({'message': 'Income update successfully'})
+            return JsonResponse({'message': 'Income updated successfully'})
         
         except User.DoesNotExist:
             return JsonResponse({'error': 'User does not exist'}, status=400)
         except Income.DoesNotExist:
             return JsonResponse({'error': 'Income not found'}, status=400)
+        except IncomeCategory.DoesNotExist:
+            return JsonResponse({'error': 'Income category does not exist'}, status=400)
         
