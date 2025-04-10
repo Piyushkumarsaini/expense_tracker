@@ -1,323 +1,138 @@
-# 📄 Expense Tracker API Documentation
+This Django project allows users to manage their income, expenses, and budgets.
+It includes features such as category-wise tracking, selection of payment methods, and user authentication for a secure and personalized experience.
 
-This document contains all the API endpoints for the Expense Tracker project built with Django. Each API is explained with its request format, response format, and usage.
+# 💰 Expense Tracker – Django Project
 
----
-
-## 🔁 API Flow Order
-
-1. Signup – `/signup/`  
-2. Login – `/login/`  
-3. Change Password – `/changepassword/`  
-4. Add Income – `/income/`  
-5. Show Income – `/income/<int:user_id>`  
-6. Delete Income – `/income/<int:user_id>/delete/<int:income_id>`  
-7. Update Income – `/income/<int:user_id>/update/<int:income_id>`  
-8. Add Expense – `/expense/`  
-9. Show Expense – `/expense/<int:user_id>`  
-10. Delete Expense – `/expense/<int:user_id>/delete/<int:expense_id>`  
-11. Update Expense – `/expense/<int:user_id>/update/<int:expense_id>`  
-12. Get Total – `/total/<int:user_id>`
+A simple yet powerful Expense Tracker built with Django that allows users to manage their incomes, expenses, and budgets efficiently.
 
 ---
 
-# 📌 API Endpoints Documentation
+## 🚀 Features
+
+- 👤 User Registration and Management
+- 💸 Add and Categorize Expenses
+- 💰 Add and Categorize Incomes
+- 🎯 Set Budgets for Expense Categories
+- 💳 Multiple Payment Methods
+- 📊 Expense & Income History Tracking
+- 📅 Automatic Date/Time Logging
 
 ---
 
-## ✅ 1. User Signup
+## 🛠️ Tech Stack
 
-- **URL**: `/signup/`
-- **Method**: `POST`
-
-**Request Body**:
-```json
-{
-  "username": "zahul",
-  "email": "zahul01@gmail.com",
-  "password": "123234",
-  "confirmpassword": "123234"
-}
-```
-
-**Response Body**:
-```json
-{
-  "message": "User Signup Successfully"
-}
-```
-
-📸 Screenshot:  
-![Signup Screenshot](screenshort/signup.png)
+- **Backend**: Django (Python)
+- **Database**: SQLite
+- **Tools**: Django Admin, ORM, Migrations
 
 ---
 
-## ✅ 2. User Login
+## 🗂️ Models Overview
 
-- **URL**: `/login/`
-- **Method**: `POST`
+### 👤 `User`
+Stores user account info:
+- `username`, `email`, `password`
+- `date`, `time` (auto-created)
 
-**Request Body**:
-```json
-{
-  "email": "zahul01@gmail.com",
-  "password": "123234"
-}
-```
+### 💰 `Income`
+Tracks income records:
+- Linked to `User` and `IncomeCategory`
+- Stores `amount`, `category_id`, `date`, `time` (auto-created)
 
-**Response Body**:
-```json
-{
-  "message": "Login Successfully"
-}
-```
 
-📸 Screenshot:  
-![Login Screenshot](screenshort/login.png)
+### 📈 `IncomeCategory`
+Stores names of income types (e.g. Salary, Bonus)
 
----
+### 💸 `Expense` 
+Tracks expenses:
+- Linked to `User`, `ExpenseCategory`, `PaymentMethod`
+- Contains `amount`, `category_id`, `payment_method_id`, `description`, `date`, `time` (auto-created)
 
-## ✅ 3. Change Password
+### 🧾 `ExpenseCategory`
+Stores names of expense types (e.g. Food, Travel)
 
-- **URL**: `/changepassword/`
-- **Method**: `POST`
+### 💳 `PaymentMethod`
+Stores available payment methods (e.g. Cash, Card)
 
-**Request Body**:
-```json
-{
-  "email": "zahul01@gmail.com",
-  "old_password": "123234",
-  "new_password": "123234gymp"
-}
-```
-
-**Response Body**:
-```json
-{
-  "message": "Change Password Successfully"
-}
-```
-
-📸 Screenshot:  
-![Change Password Screenshot](screenshort/changepassword.png)
+### 🎯 `Budget`
+Users can set a limit for a specific expense category
 
 ---
 
-## ✅ 4. Add Income
+## ⚙️ Installation & Setup
 
-- **URL**: `/income/`
-- **Method**: `POST`
+1. **Clone the Repository**
 
-**Request Body**:
-```json
-{
-  "id": 8,
-  "income_category": 1,
-  "amount": 546
-}
+```bash
+git clone https://github.com/Piyushkumarsaini/expense_tracker.git
+cd expense_teacker
 ```
 
-**Response Body**:
-```json
-{
-  "message": "Income added successfully"
-}
+2. **Create Virtual Environment**
+```venv
+python -m venv venv
+```
+3. **Activate Virtual Environment**
+```venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-📸 Screenshot:  
-![Add Income Screenshot](screenshort/addincome.png)
-
----
-
-## ✅ 5. Show Income
-
-- **URL**: `/income/<int:user_id>`
-- **Method**: `GET`
-
-**Example**: `/income/1`
-
-**Response Body**:
-```json
-{
-  "id": 8,
-  "user_id": 8,
-  "amount": 546,
-  "category": "salary",
-  "date": "2025-04-10",
-  "time": "13:39:39.691"
-}
+4. **Install Dependencies**
+```
+pip install -r requirements.txt
 ```
 
-📸 Screenshot:  
-![Show Income Screenshot](screenshort/showincome.png)
-
----
-
-## ✅ 6. Delete Income
-
-- **URL**: `/income/<int:user_id>/delete/<int:income_id>`
-- **Method**: `DELETE`
-
-**Example**: `/income/8/delete/9`
-
-**Response Body**:
-```json
-{
-  "message": "Income delete successfully"
-}
+5. **Run Migrations**
+```
+python manage.py makemigrations
+python manage.py migrate
 ```
 
-📸 Screenshot:  
-![Delete Income Screenshot](screenshort/deleteincome.png)
-
----
-
-## ✅ 7. Update Income
-
-- **URL**: `/income/<int:user_id>/update/<int:income_id>`
-- **Method**: `PATCH`
-
-**Example**: `/income/8/update/8`
-
-**Request Body**:
-```json
-{
-  "income_category_id": 4,
-  "amount": 300
-}
+6. **Run the Server**
+```
+python manage.py runserver
 ```
 
-**Response Body**:
-```json
-{
-  "message": "Income update successfully"
-}
+
+
+## 📁 Project Structure
+
 ```
+expense_tracker/
+├── expense_tracker/             # Project Configuration + Root Files
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py              # Project settings
+│   ├── urls.py                  # Root URL configuration
+│   └── wsgi.py
 
-📸 Screenshot:  
-![Update Income Screenshot](screenshort/updateincome.png)
+├── expense/                     # Main App
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py                # All data models
+│   ├── tests.py
+│   ├── urls.py                  # App URL routing
+│   ├── view/                    # Views split by feature
+│   │   ├── budget.py
+│   │   ├── changepassword.py
+│   │   ├── expense.py
+│   │   ├── expensecategory.py
+│   │   ├── income.py
+│   │   ├── incomecategory.py
+│   │   ├── login.py
+│   │   ├── payment_method.py
+│   │   ├── signup.py
+│   │   ├── totale.py
+│   │   └── __pycache__/
+│   └── __pycache__/
 
----
-
-## ✅ 8. Add Expense
-
-- **URL**: `/expense/`
-- **Method**: `POST`
-
-**Request Body**:
-```json
-{
-  "id": 1,
-  "category_id": 2,
-  "payment_method_id": 2,
-  "amount": 400,
-  "description": "expense in my salary"
-}
+├── db.sqlite3                   # SQLite Database
+├── manage.py                    # Django manager script
+├── venv/                        # Virtual Environment
+├── screenshort/
+├── .gitignore
+├── API_DOCS.md                  # API Documentation
+├── requirements.txt             # Installed packages
+└── README.md                    # Project Overview
 ```
-
-**Response Body**:
-```json
-{
-  "message": "Expense added successfully"
-}
-```
-
-📸 Screenshot:  
-![Add Expense Screenshot](screenshort/addexpense.png)
-
----
-
-## ✅ 9. Show Expense
-
-- **URL**: `/expense/<int:user_id>`
-- **Method**: `GET`
-
-**Example**: `/expense/8`
-
-**Response Body**:
-```json
-{
-  "id": 1,
-  "category_name": "Rent",
-  "amount": 200,
-  "payment_method": "PhonePE",
-  "description": "save in my salary",
-  "date": "2025-04-23",
-  "time": "17:03:26.566"
-}
-```
-
-📸 Screenshot:  
-![Show Expense Screenshot](screenshort/showexpense.png)
-
----
-
-## ✅ 10. Delete Expense
-
-- **URL**: `/expense/<int:user_id>/delete/<int:expense_id>`
-- **Method**: `DELETE`
-
-**Example**: `/expense/8/delete/4`
-
-**Response Body**:
-```json
-{
-  "message": "Expense delete successfully"
-}
-```
-
-📸 Screenshot:  
-![Delete Expense Screenshot](screenshort/deleteexpense.png)
-
----
-
-## ✅ 11. Update Expense
-
-- **URL**: `/expense/<int:user_id>/update/<int:expense_id>`
-- **Method**: `PATCH`
-
-**Example**: `/expense/8/delete/4`
-
-**Request Body**:
-```json
-{
-  "id": 8,
-  "expense_category_id": 1,
-  "payment_method_id": 5,
-  "amount": 50,
-  "description": "expense in my salary"
-}
-```
-
-**Response Body**:
-```json
-{
-  "message": "Expense updated successfully"
-}
-```
-
-📸 Screenshot:  
-![Update Expense Screenshot](screenshort/updateexpense.png)
-
----
-
-## ✅ 12. Show Total
-
-- **URL**: `/total/<int:user_id>`
-- **Method**: `GET`
-
-**Example**: `/total/1`
-
-**Response Body**:
-```json
-{
-  "user_id": 1,
-  "total_income": 1638,
-  "total_expense": 408
-}
-```
-
-📸 Screenshot:  
-![Show Total Screenshot](screenshort/total.png)
-
----
