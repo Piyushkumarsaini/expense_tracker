@@ -34,3 +34,8 @@ This document contains all the API endpoints for the Expense Tracker project bui
   "password": "123234",
   "confirmpassword": "123234"
 }
+- **Response Body**:
+```json
+{
+  "message": "User Signup Successfully"
+}
