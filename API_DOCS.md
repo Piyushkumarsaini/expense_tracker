@@ -48,7 +48,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Signup Screenshot](#)
+![Signup Screenshot](screenshort/signup.png)
 
 ---
 
@@ -73,7 +73,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Login Screenshot](#)
+![Login Screenshot](screenshort/login.png)
 
 ---
 
@@ -99,7 +99,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Change Password Screenshot](#)
+![Change Password Screenshot](screenshort/changepassword.png)
 
 ---
 
@@ -111,7 +111,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 **Request Body**:
 ```json
 {
-  "id": 1,
+  "id": 8,
   "income_category": 1,
   "amount": 546
 }
@@ -125,7 +125,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Add Income Screenshot](#)
+![Add Income Screenshot](screenshort/addincome.png)
 
 ---
 
@@ -139,16 +139,17 @@ This document contains all the API endpoints for the Expense Tracker project bui
 **Response Body**:
 ```json
 {
-  "id": 1,
-  "category_name": "Rent",
-  "amount": 200,
-  "date": "2025-04-23",
-  "time": "17:03:26.566"
+  "id": 8,
+  "user_id": 8,
+  "amount": 546,
+  "category": "salary",
+  "date": "2025-04-10",
+  "time": "13:39:39.691"
 }
 ```
 
 📸 Screenshot:  
-![Show Income Screenshot](#)
+![Show Income Screenshot](screenshort/showincome.png)
 
 ---
 
@@ -157,7 +158,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 - **URL**: `/income/<int:user_id>/delete/<int:income_id>`
 - **Method**: `DELETE`
 
-**Example**: `/income/1/delete/1`
+**Example**: `/income/8/delete/9`
 
 **Response Body**:
 ```json
@@ -167,7 +168,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Delete Income Screenshot](#)
+![Delete Income Screenshot](screenshort/deleteincome.png)
 
 ---
 
@@ -176,12 +177,12 @@ This document contains all the API endpoints for the Expense Tracker project bui
 - **URL**: `/income/<int:user_id>/update/<int:income_id>`
 - **Method**: `PATCH`
 
-**Example**: `/income/1/update/1`
+**Example**: `/income/8/update/8`
 
 **Request Body**:
 ```json
 {
-  "income_category": 4,
+  "income_category_id": 4,
   "amount": 300
 }
 ```
@@ -194,7 +195,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Update Income Screenshot](#)
+![Update Income Screenshot](screenshort/updateincome.png)
 
 ---
 
@@ -206,7 +207,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 **Request Body**:
 ```json
 {
-  "id": 7,
+  "id": 1,
   "category_id": 2,
   "payment_method_id": 2,
   "amount": 400,
@@ -222,7 +223,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Add Expense Screenshot](#)
+![Add Expense Screenshot](screenshort/addexpense.png)
 
 ---
 
@@ -231,7 +232,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 - **URL**: `/expense/<int:user_id>`
 - **Method**: `GET`
 
-**Example**: `/expense/1`
+**Example**: `/expense/8`
 
 **Response Body**:
 ```json
@@ -247,7 +248,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Show Expense Screenshot](#)
+![Show Expense Screenshot](screenshort/showexpense.png)
 
 ---
 
@@ -256,7 +257,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 - **URL**: `/expense/<int:user_id>/delete/<int:expense_id>`
 - **Method**: `DELETE`
 
-**Example**: `/expense/1/delete/1`
+**Example**: `/expense/8/delete/4`
 
 **Response Body**:
 ```json
@@ -266,7 +267,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Delete Expense Screenshot](#)
+![Delete Expense Screenshot](screenshort/deleteexpense.png)
 
 ---
 
@@ -275,13 +276,15 @@ This document contains all the API endpoints for the Expense Tracker project bui
 - **URL**: `/expense/<int:user_id>/update/<int:expense_id>`
 - **Method**: `PATCH`
 
+**Example**: `/expense/8/delete/4`
+
 **Request Body**:
 ```json
 {
-  "id": 1,
-  "category_id": 2,
-  "payment_method_id": 2,
-  "amount": 400,
+  "id": 8,
+  "expense_category_id": 1,
+  "payment_method_id": 5,
+  "amount": 50,
   "description": "expense in my salary"
 }
 ```
@@ -294,7 +297,7 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Update Expense Screenshot](#)
+![Update Expense Screenshot](screenshort/updateexpense.png)
 
 ---
 
@@ -315,6 +318,6 @@ This document contains all the API endpoints for the Expense Tracker project bui
 ```
 
 📸 Screenshot:  
-![Show Total Screenshot](#)
+![Show Total Screenshot](screenshort/total.png)
 
 ---
