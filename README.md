@@ -1,9 +1,8 @@
-This Django project allows users to manage their income, expenses, and budgets.
-It includes features such as category-wise tracking, selection of payment methods, and user authentication for a secure and personalized experience.
+.
 
 # 💰 Expense Tracker – Django Project
-
-A simple yet powerful Expense Tracker built with Django that allows users to manage their incomes, expenses, and budgets efficiently.
+This Django project allows users to manage their income, expenses, and budgets.
+It includes features such as category-wise tracking, selection of payment methods, and user authentication for a secure and personalized experience
 
 ---
 
