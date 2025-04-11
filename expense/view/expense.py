@@ -35,7 +35,7 @@ class ExpenseDetail(View):
         try:
             fetch_user = User.objects.get(id=user_id)
             fetch_category = ExpenseCategory.objects.get(id=category_id)
-            fetch_payment_method = PatmentMethod.objects.get(id=payment_method_id)
+            fetch_payment_method = PaymentMethod.objects.get(id=payment_method_id)
 
             Expense.objects.create(
                 user_id=fetch_user,
@@ -54,7 +54,7 @@ class ExpenseDetail(View):
         except ExpenseCategory.DoesNotExist:
             return JsonResponse({'error': 'Category does not exist'}, status=400)
 
-        except PatmentMethod.DoesNotExist:
+        except PaymentMethod.DoesNotExist:
             return JsonResponse({'error': 'Payment method does not exist'}, status=400)
         
 
@@ -105,13 +105,26 @@ class ExpenseDetail(View):
             data = json.loads(request.body.decode('utf-8'))
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+        
+
+        amount = data.get('amount')
+        description = data.get('description')
+        expense_category_id = data.get('expense_category_id')
+        payment_method_id = data.get('payment_method_id')
 
         try:
             fetch_user = User.objects.get(id=user_id)
             fetch_expense = Expense.objects.get(id=expense_id, user_id=fetch_user)
+            new_category = ExpenseCategory.objects.get(id=expense_category_id)
+            new_payment_method = PaymentMethod.objects.get(id=payment_method_id)
 
-            fetch_expense.amount = data.get('amount', fetch_expense.amount)
-            fetch_expense.description = data.get('description', fetch_expense.description)
+            fetch_expense.amount = amount
+            fetch_expense.description = description
+            fetch_expense.category_id = new_category
+            fetch_expense.payment_method_id = new_payment_method
+            fetch_expense.category = new_category.expense_category
+            fetch_expense.payment_method = new_payment_method.payment_method
+
             fetch_expense.save()
 
             return JsonResponse({'message': 'Expense updated successfully'}, status=200)

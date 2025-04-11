@@ -27,44 +27,94 @@ A simple yet powerful Expense Tracker built with Django that allows users to man
 
 ---
 
+## 🗂️ Models Overview
+
+### 👤 `User`
+Stores user account info:
+- `username`, `email`, `password`
+- `date`, `time` (auto-created)
+
+### 💰 `Income`
+Tracks income records:
+- Linked to `User` and `IncomeCategory`
+- Stores `amount`, `category_id`, `date`, `time` (auto-created)
+
+
+### 📈 `IncomeCategory`
+Stores names of income types (e.g. Salary, Bonus)
+
+### 💸 `Expense` 
+Tracks expenses:
+- Linked to `User`, `ExpenseCategory`, `PaymentMethod`
+- Contains `amount`, `category_id`, `payment_method_id`, `description`, `date`, `time` (auto-created)
+
+### 🧾 `ExpenseCategory`
+Stores names of expense types (e.g. Food, Travel)
+
+### 💳 `PaymentMethod`
+Stores available payment methods (e.g. Cash, Card)
+
+### 🎯 `Budget`
+Users can set a limit for a specific expense category
+
+---
 
 ## ⚙️ Installation & Setup
 
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/Piyushkumarsaini/expense_teacker.git
+git clone https://github.com/Piyushkumarsaini/expense_tracker.git
 cd expense_teacker
+```
 
-Create Virtual Environment
+2. **Create Virtual Environment**
+```venv
 python -m venv venv
+```
+3. **Activate Virtual Environment**
+```venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-
-Install Dependencies
+4. **Install Dependencies**
+```
 pip install -r requirements.txt
+```
 
-
-Run Migrations
+5. **Run Migrations**
+```
 python manage.py makemigrations
 python manage.py migrate
+```
 
-Run the Server
+6. **Run the Server**
+```
 python manage.py runserver
+```
 
 
 
-📁 Project Structure
+## 📁 Project Structure
 
-├── expense/                          # Main App
+```
+expense_tracker/
+├── expense_tracker/             # Project Configuration + Root Files
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py              # Project settings
+│   ├── urls.py                  # Root URL configuration
+│   └── wsgi.py
+
+├── expense/                     # Main App
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── models.py                     # All data models
+│   ├── models.py                # All data models
 │   ├── tests.py
-│   ├── urls.py                       # URL routing
-│   ├── view/                         # Views folder (split by feature)
-│   │   ├── budget.py                 # Budget logic
+│   ├── urls.py                  # App URL routing
+│   ├── view/                    # Views split by feature
+│   │   ├── budget.py
 │   │   ├── changepassword.py
 │   │   ├── expense.py
 │   │   ├── expensecategory.py
@@ -76,15 +126,13 @@ python manage.py runserver
 │   │   ├── totale.py
 │   │   └── __pycache__/
 │   └── __pycache__/
-│
-├── expense_tracker/                 # Project Configuration + Root Files
-│   ├── __init__.py
-│   ├── settings.py                  # Project settings
-│   ├── urls.py                      # Root URL configuration
-│   ├── db.sqlite3                   # SQLite Database
-│   ├── manage.py                    # Django manager script
-│   ├── venv/                        # Virtual Environment
-│   └── README.md                    # Project Documentation
 
-
-
+├── db.sqlite3                   # SQLite Database
+├── manage.py                    # Django manager script
+├── venv/                        # Virtual Environment
+├── screenshort/
+├── .gitignore
+├── API_DOCS.md                  # API Documentation
+├── requirements.txt             # Installed packages
+└── README.md                    # Project Overview
+```
