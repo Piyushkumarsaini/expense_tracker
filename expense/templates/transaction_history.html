@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="/add_transaction/">
                         <i class="fas fa-plus"></i> Add Transaction
                     </a>
                 </li>
@@ -110,7 +110,7 @@
                     {% for transaction in transactions %}
                         <tr>
                             <td>{{ transaction.type }}</td>
-                            <td>{{ transaction.category }}</td>
+                            <td>{{ transaction.category_name }}</td>
                             <td>{{ transaction.description }}</td>
                             <td>{{ transaction.amount }}</td>
                             <td>{{ transaction.payment_method }}</td>

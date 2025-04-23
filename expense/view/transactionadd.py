@@ -99,6 +99,7 @@ class AddTransaction(View):
                 amount=amount,
                 description=description
                 )
+            print(save_expense_details)
             save_expense_details.save()
 
         else:

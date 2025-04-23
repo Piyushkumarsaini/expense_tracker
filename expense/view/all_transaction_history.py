@@ -106,6 +106,7 @@ class AllTransactionHistory(View):
                             'payment_method':income.payment_method,
                             'date': income.date
                         }
+                        
                         transactions_list.append(data)
 
             elif transaction_type == 'expense':

@@ -27,8 +27,8 @@ class DashBoard(View):
 
           total = total_expense + total_income
           
-          income_today = Income.objects.filter(user_id=user_seen)[:5]
-          expense_today = Expense.objects.filter(user_id=user_seen)[:5]
+          income_today = Income.objects.filter(user_id=user_seen, date=today)[:5]
+          expense_today = Expense.objects.filter(user_id=user_seen, date=today)[:5]
 
 
           transactions_list = []

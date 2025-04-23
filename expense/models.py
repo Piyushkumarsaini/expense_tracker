@@ -61,7 +61,7 @@ class Expense(models.Model):
 
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)
 
 
     
