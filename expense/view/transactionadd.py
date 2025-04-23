@@ -78,6 +78,7 @@ class AddTransaction(View):
         if transaction_type == 'income':
             save_income_datiles = Income.objects.create(
                 user_id=user,
+                type=transaction_type,
                 # category_id=fetch_category,
                 # payment_method_id=payment_method_id,
                 category=fetch_category.income_category,
@@ -92,6 +93,7 @@ class AddTransaction(View):
         elif transaction_type == 'expense':
             save_expense_details = Expense.objects.create(
                 user_id=user,
+                type=transaction_type,
                 # category_id=fetch_category,
                 # payment_method_id=payment_method_id,
                 category=fetch_category.income_category,

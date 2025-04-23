@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.db.models import Sum
 from datetime import date
+from itertools import chain
 
 class DashBoard(View):
      def get(self,request):
@@ -27,30 +28,32 @@ class DashBoard(View):
 
           total = total_expense + total_income
           
-          income_today = Income.objects.filter(user_id=user_seen, date=today)[:5]
-          expense_today = Expense.objects.filter(user_id=user_seen, date=today)[:5]
+          income_today = Income.objects.filter(user_id=user_seen, date=today).order_by('-id')[:5]
+          expense_today = Expense.objects.filter(user_id=user_seen, date=today).order_by('-id')[:5]
+
+          combineds = list(chain(income_today,expense_today))
 
 
           transactions_list = []
 
-          for income in income_today:
+          for combined in combineds:
                transactions_list.append({
-                    'type':'income',
-                    'category_name': income.category,
-                    'description':income.description,
-                    'amount': income.amount,
-                    'payment_method':income.payment_method,
-                    'date': income.date
+                    'type':combined.type,
+                    'category_name': combined.category,
+                    'description':combined.description,
+                    'amount': combined.amount,
+                    'payment_method':combined.payment_method,
+                    'date': combined.date
                })
-          for expense in expense_today:
-               transactions_list.append({
-                    'type':'expense',
-                    'category_name': expense.category,
-                    'description':expense.description,
-                    'amount': expense.amount,
-                    'payment_method':expense.payment_method,
-                    'date': expense.date
-               })
+          # for expense in expense_today:
+          #      transactions_list.append({
+          #           'type':'expense',
+          #           'category_name': expense.category,
+          #           'description':expense.description,
+          #           'amount': expense.amount,
+          #           'payment_method':expense.payment_method,
+          #           'date': expense.date
+          #      })
 
           return render(request, 'dashboard.html',{
                'transactions':transactions_list,

@@ -28,6 +28,7 @@ class PaymentMethod(models.Model):
 
 class Income(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    type = models.CharField(max_length=10)
     category_id = models.ForeignKey(IncomeCategory,on_delete=models.SET_NULL, null=True)
     payment_method_id = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
     category = models.CharField(max_length=20)
@@ -50,6 +51,7 @@ class ExpenseCategory(models.Model):
 
 class Expense(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(max_length=10)
     category_id = models.ForeignKey(IncomeCategory,on_delete=models.SET_NULL, null=True)
     payment_method_id = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
     category = models.CharField(max_length=20)

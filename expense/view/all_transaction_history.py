@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist
+from itertools import chain
 
 
 
@@ -22,41 +23,25 @@ class AllTransactionHistory(View):
             categories = IncomeCategory.objects.all()
             payment_methods = PaymentMethod.objects.all()
 
-            # Get transaction_type from the GET parameters
-            transaction_type = request.GET.get('type', 'all')  # Default to 'all' if no type is provided
-
-            user_seen = User.objects.get(id=user_id)
-
             # Fetching income and expense data for the user
-            fetch_income = Income.objects.filter(user_id=user_seen)
-            fetch_expense = Expense.objects.filter(user_id=user_seen)
+            fetch_income = Income.objects.filter(user_id=user).order_by('-id')
+            fetch_expense = Expense.objects.filter(user_id=user).order_by('-id')
 
-            # Initialize an empty list to hold the transactions
+            combineds = list(chain(fetch_income,fetch_expense))
+
+
             transactions_list = []
 
-            for income in fetch_income:
-                data = {
-                    'type': 'income',
-                    'category_name': income.category,
-                    'description': income.description,
-                    'amount': income.amount,
-                    'payment_method': income.payment_method,
-                    'date': income.date
-                }
-                transactions_list.append(data)
-
-            for expense in fetch_expense:
-                data = {
-                    'type': 'expense',
-                    'category_name': expense.category,
-                    'description': expense.description,
-                    'amount': expense.amount,
-                    'payment_method': expense.payment_method,
-                    'date': expense.date
-                }
-                transactions_list.append(data)
-
-            # Render the template with the transaction data
+            for combined in combineds:
+                transactions_list.append({
+                        'type':combined.type,
+                        'category_name': combined.category,
+                        'description':combined.description,
+                        'amount': combined.amount,
+                        'payment_method':combined.payment_method,
+                        'date': combined.date
+                })
+                # Render the template with the transaction data
             return render(request, 'transaction_history.html', {
                 'transactions': transactions_list,
                 'categories': categories,
@@ -89,17 +74,17 @@ class AllTransactionHistory(View):
             categories = IncomeCategory.objects.all()
             payment_methods = PaymentMethod.objects.all()
 
+            fetch_income = Income.objects.filter(user_id=user).order_by('-id')
+            fetch_expense = Expense.objects.filter(user_id=user).order_by('-id')
 
-            user_seen = User.objects.get(id=user_id)
-            fetch_income = Income.objects.filter(user_id=user_seen)
-            fetch_expense = Expense.objects.filter(user_id=user_seen)
+            # combineds = list(chain(fetch_income,fetch_expense))
 
 
             transactions_list = []
             if transaction_type == 'income':
                 for income in fetch_income:
                         data = {
-                            'type':'income',
+                            'type':income.type,
                             'category_name': income.category,
                             'description':income.description,
                             'amount': income.amount,
@@ -112,7 +97,7 @@ class AllTransactionHistory(View):
             elif transaction_type == 'expense':
                 for expense in fetch_expense:
                         data = {
-                            'type':'expense',
+                            'type':expense.type,
                             'category_name': expense.category,
                             'description':expense.description,
                             'amount': expense.amount,
@@ -121,8 +106,19 @@ class AllTransactionHistory(View):
                         }
                         
                         transactions_list.append(data)
-
             
+            
+            # elif transaction_type == 'all':
+            #     for combined in combineds:
+            #         transactions_list.append({
+            #                 'type':combined.type,
+            #                 'category_name': combined.category,
+            #                 'description':combined.description,
+            #                 'amount': combined.amount,
+            #                 'payment_method':combined.payment_method,
+            #                 'date': combined.date
+            #         })
+
             return render(request, 'transaction_history.html', {
                             'transactions': transactions_list,
                             'categories': categories,
