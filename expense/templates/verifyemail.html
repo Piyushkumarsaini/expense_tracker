@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/verifyemail.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Forgot Password</h1>
+        <div id="error-message" class="error"></div>
+        
+        <form id="verify-email" method="POST" action="{% url 'verify_email' %}">
+            {% csrf_token %}
+            <input type="email" id="email" name="email" placeholder="Email">
+            <button type="submit">Send Reset Link</button>
+        </form>
+    </div>
+    <script src="{% static 'js/verify_email.js' %}"></script>
+</body>
+</html>

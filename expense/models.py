@@ -19,26 +19,6 @@ class IncomeCategory(models.Model):
     def __str__(self):
         return self.income_category
 
-
-class Income(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
-    category_id = models.ForeignKey(IncomeCategory,on_delete=models.SET_NULL, null=True)
-    category = models.CharField(max_length=20)
-    amount = models.IntegerField()
-    date = models.DateField(auto_now=True)
-    time = models.TimeField(auto_now=True,null=True)
-
-    def __str__(self):
-        return self.user_id
-
-    
-class ExpenseCategory(models.Model):
-    expense_category = models.CharField(max_length=100,null=True)
-
-    def __str__(self):
-        return self.expense_category
-    
-
 class PaymentMethod(models.Model):
     payment_method = models.CharField(max_length=20)
 
@@ -46,9 +26,31 @@ class PaymentMethod(models.Model):
         return self.payment_method
     
 
+class Income(models.Model):
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    category_id = models.ForeignKey(IncomeCategory,on_delete=models.SET_NULL, null=True)
+    payment_method_id = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
+    category = models.CharField(max_length=20)
+    payment_method = models.CharField(max_length=20)
+    amount = models.IntegerField()
+    description = models.TextField(blank=True,null=True, default="")
+    date = models.DateField(auto_now=True)
+    time = models.TimeField(auto_now=True,null=True)
+
+    def __str__(self):
+        return str(self.user_id)
+
+    
+class ExpenseCategory(models.Model):
+    expense_category = models.CharField(max_length=100,null=True)
+
+    def __str__(self):
+        return self.expense_category
+
+
 class Expense(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    category_id = models.ForeignKey(ExpenseCategory,on_delete=models.SET_NULL, null=True)
+    category_id = models.ForeignKey(IncomeCategory,on_delete=models.SET_NULL, null=True)
     payment_method_id = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
     category = models.CharField(max_length=20)
     payment_method = models.CharField(max_length=20)

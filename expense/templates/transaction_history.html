@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/transaction_history.css' %}">
+</head>
+<body>
+    <!-- Header with Buttons -->
+    <header class="header">
+        <h1>Transaction History</h1>
+        <div class="header-buttons">
+            <a href="#" class="btn profile-btn">Profile <i class="fas fa-user"></i></a>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul class="nav-list">
+                <li class="nav-item active">
+                    <a href="/dashboard/">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/transaction_history/">
+                        <i class="fas fa-history"></i> Transactions History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-save"></i> Saved Transactions
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i> Budget
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </a>
+                </li> -->
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Filters -->
+            <form method="POST" class="filters" action="{% url 'transaction_history' %}">
+                {% csrf_token %}
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="type-filter">Type:</label>
+                        <select id="type-filter" name="type" onchange="this.form.submit()">
+                            <option value="all" {% if type_filter == 'all' %}selected{% endif %}>All</option>
+                            <option value="income" {% if type_filter == 'income' %}selected{% endif %}>Income</option>
+                            <option value="expense" {% if type_filter == 'expense' %}selected{% endif %}>Expense</option>
+                        </select>
+                    </div>
+                <div class="filter-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.income_category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="payment-method">Payment Method:</label>
+                    <select id="payment-method" name="payment_method" required>
+                        <option value="" disabled selected>Select Payment Method</option>
+                        {% for method in payment_methods %}
+                            <option value="{{ method.id }}">{{ method.payment_method }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date:</label>
+                    <input type="date" id="date-filter">
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <h2>Transaction Log</h2>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.type }}</td>
+                            <td>{{ transaction.category }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.payment_method }}</td>
+                            <td>{{ transaction.date|date:'Y-m-d' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Download Buttons -->
+            <div class="download-buttons">
+                <a href="#" class="btn download-btn">Download CSV</a> 
+                <a href="#" class="btn download-btn">Download PDF</a>
+            </div>
+        </main>
+</body>
+</html>

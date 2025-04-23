@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Expanse Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <div id="error-message" class="error"></div>
+        
+        <form id="login-form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="email" id="email" name="email" placeholder="Email">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <label>
+                <input type="checkbox" id="toggle-passwords"> Show Passwords
+            </label>
+            <p><a href="/verify_email/" class="reset-btn">Forgot Your Password</a></p>
+            <button type="submit">Login</button>
+
+            <p>Or login with:</p>
+            <div class="social-logins">
+                <a href="#" class="google-btn">Login with Google</a>
+                <a href="#" class="facebook-btn">Login with Facebook</a>
+                <a href="#" class="instagram-btn">Login with Instagram</a>
+            </div>
+            <p>Don't have an account? <a href="{% url 'signup' %}">Signup</a></p>
+        </form>
+    </div>
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>

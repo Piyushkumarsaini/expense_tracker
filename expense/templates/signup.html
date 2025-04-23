@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Expanse Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <div id="error-message" class="error"></div>
+        
+        <form id="signup-form" method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <input type="text" id="username" name="username" placeholder="Username">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            <label>
+                <input type="checkbox" id="toggle-passwords"> Show Passwords
+            </label>
+            <button type="submit">Signup</button>
+
+            <p>Or signup with:</p>
+            <div class="social-logins">
+                <a href="#" class="google-btn">Sign up with Google</a>
+                <a href="#" class="facebook-btn">Sign up with Facebook</a>
+                <a href="#" class="instagram-btn">Sign up with Instagram</a> <!-- We'll integrate Instagram later -->
+            </div>
+            <p>Already Have An Account? <a href="{% url 'login' %}">Login</a></p>
+        </form>
+
+    </div>
+    <script src="{% static 'js/signup.js' %}"></script>
+    
+</body>
+</html>
