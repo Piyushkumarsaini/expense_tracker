@@ -6,11 +6,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalExpenseSpan = document.getElementById('total-expense');
     const totalSpan = document.getElementById('total');
 
+
     if (!form) {
         console.error('Form with ID "add-transaction-form" not found');
         return;
     }
-
+    
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener('change', () => {
+            const selectedValue = paymentMethodSelect.value;
+    
+            if (selectedValue === '__view_all__') {
+                const hiddenOptions = paymentMethodSelect.querySelectorAll('.hidden-method');
+                hiddenOptions.forEach(opt => {
+                    opt.style.display = 'block';
+                });
+    
+                // Remove "View All Methods" option
+                const viewAllOption = document.getElementById('view-all-option');
+                if (viewAllOption) {
+                    viewAllOption.remove();
+                }
+    
+                // ✅ Delay reset so it doesn’t block rendering
+                setTimeout(() => {
+                    paymentMethodSelect.selectedIndex = 0;
+                }, 10); // 10ms is enough
+            }
+        });
+    }
+    
     // Handle form submission
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

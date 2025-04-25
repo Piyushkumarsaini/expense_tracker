@@ -26,11 +26,17 @@ class AddTransaction(View):
 
         # Fetch categories and payment methods from the database
         categories = IncomeCategory.objects.all()
-        payment_methods = UserPaymentMethod.objects.all()
+        # payment_methods = UserPaymentMethod.objects.all()
+
+        # All available payment methods
+        all_payment_methods = PaymentMethod.objects.all()
+
+        assigned_methods = UserPaymentMethod.objects.filter(user_id=user).values_list('payment_method_id', flat=True)
 
         return render(request, 'transaction_add.html', {
             'categories': categories,
-            'payment_methods': payment_methods,  
+            'payment_methods': all_payment_methods,
+            'assigned_methods': list(assigned_methods),   
             'total_income': total_income,
             'total_expense': total_expense,
             'total': total,

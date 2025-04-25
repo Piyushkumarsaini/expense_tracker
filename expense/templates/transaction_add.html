@@ -101,11 +101,27 @@
                         <label for="payment-method">Payment Method:</label>
                         <select id="payment-method" name="payment_method" required>
                             <option value="" disabled selected>Select Payment Method</option>
+                    
                             {% for method in payment_methods %}
-                                <option value="{{ method.id }}">{{ method.payment_method }}</option>
+                                {% if method.id in assigned_methods %}
+                                    <option value="{{ method.id }}">
+                                        {{ method.payment_method }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                    
+                            <option disabled>──────────</option>
+                            <option value="__view_all__" id="view-all-option">▼ View All Methods</option>
+                    
+                            {% for method in payment_methods %}
+                                {% if method.id not in assigned_methods %}
+                                    <option value="{{ method.id }}" class="hidden-method" style="display: none;">
+                                        {{ method.payment_method }}
+                                    </option>
+                                {% endif %}
                             {% endfor %}
                         </select>
-                    </div>
+                    </div>                              
                     <div class="filter-group">
                         <label for="amount">Amount:</label>
                         <input type="number" id="amount" name="amount" step="0.01" min="0" required>
