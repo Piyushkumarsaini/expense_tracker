@@ -26,7 +26,7 @@ class AddTransaction(View):
 
         # Fetch categories and payment methods from the database
         categories = IncomeCategory.objects.all()
-        payment_methods = PaymentMethod.objects.all()
+        payment_methods = UserPaymentMethod.objects.all()
 
         return render(request, 'transaction_add.html', {
             'categories': categories,
@@ -63,15 +63,8 @@ class AddTransaction(View):
             return JsonResponse({'error': 'Missing required fields'}, status=400)
 
         try:
-            category_id = int(category_id)
-            payment_method_id = int(payment_method_id)
-            amount = float(amount)  # Convert to float for decimal amounts
-        except (ValueError, TypeError):
-            return JsonResponse({'error': 'Invalid data types for category, payment method, or amount'}, status=400)
-
-        try:
             fetch_category = IncomeCategory.objects.get(id=category_id)
-            fetch_payment = PaymentMethod.objects.get(id=payment_method_id)
+            fetch_payment = UserPaymentMethod.objects.get(id=payment_method_id)
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid category or payment method'}, status=400)
 
@@ -79,25 +72,20 @@ class AddTransaction(View):
             save_income_datiles = Income.objects.create(
                 user_id=user,
                 type=transaction_type,
-                # category_id=fetch_category,
-                # payment_method_id=payment_method_id,
-                category=fetch_category.income_category,
-                payment_method=fetch_payment.payment_method,
+                category=fetch_category,
+                payment_method=fetch_payment,
                 amount=amount,
                 description=description
                 )
             
             save_income_datiles.save()
-            # No need to call .save() again
 
         elif transaction_type == 'expense':
             save_expense_details = Expense.objects.create(
                 user_id=user,
                 type=transaction_type,
-                # category_id=fetch_category,
-                # payment_method_id=payment_method_id,
-                category=fetch_category.income_category,
-                payment_method=fetch_payment.payment_method,
+                category=fetch_category,
+                payment_method=fetch_payment,
                 amount=amount,
                 description=description
                 )
@@ -109,7 +97,7 @@ class AddTransaction(View):
 
         # Fetch updated categories and payment methods for the template
         categories = IncomeCategory.objects.all()
-        payment_methods = PaymentMethod.objects.all()
+        payment_methods = UserPaymentMethod.objects.all()
         total_income_data = Income.objects.filter(user_id=user).aggregate(total_income=Sum('amount'))
         total_expense_data = Expense.objects.filter(user_id=user).aggregate(total_expense=Sum('amount'))
         total_expense = total_expense_data['total_expense'] or 0

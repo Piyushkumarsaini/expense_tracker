@@ -21,7 +21,7 @@ class AllTransactionHistory(View):
 
             # Fetch categories and payment methods from the database
             categories = IncomeCategory.objects.all()
-            payment_methods = PaymentMethod.objects.all()
+            payment_methods = UserPaymentMethod.objects.all()
 
             # Fetching income and expense data for the user
             fetch_income = Income.objects.filter(user_id=user).order_by('-id')
@@ -72,7 +72,7 @@ class AllTransactionHistory(View):
 
             # Fetch categories and payment methods from the database
             categories = IncomeCategory.objects.all()
-            payment_methods = PaymentMethod.objects.all()
+            payment_methods = UserPaymentMethod.objects.all()
 
             fetch_income = Income.objects.filter(user_id=user).order_by('-id')
             fetch_expense = Expense.objects.filter(user_id=user).order_by('-id')

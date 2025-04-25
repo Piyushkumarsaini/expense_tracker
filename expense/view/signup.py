@@ -159,6 +159,18 @@ class Signup(View):
                 password=hashers_password
                 )
             user_save.save()
+
+            # Step 2: Assign first 6 default payment methods to this user
+            default_methods = PaymentMethod.objects.all()[:6]
+            user_payment_objects = []
+
+            for method in default_methods:
+                user_payment_objects.append(
+                    UserPaymentMethod(user_id=user_save, payment_method=method)
+                )
+
+            UserPaymentMethod.objects.bulk_create(user_payment_objects) # bulk_create() → sabhi entries ko ek hi baar mein save kar diya (zyada fast & efficient).
+
             return JsonResponse({'message':'User Signup Successfully'},status=201)
         except Exception as e:
             return JsonResponse({'error':f'Something went wrong: {str(e)}'})

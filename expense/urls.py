@@ -12,7 +12,6 @@ from .view.transactionadd import *
 
 urlpatterns = [
     path('signup/',Signup.as_view(), name='signup'),
-    # path('changepassword/',ChangePassword.as_view(), name='change_password'),
     path('login/',Login.as_view(), name='login'),
     path('verify_email/',VerifyEmail.as_view(), name='verify_email'),
     path('reset_password/',SetNewPassword.as_view(), name='reset_password'),
