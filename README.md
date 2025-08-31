@@ -64,7 +64,7 @@ Users can set a limit for a specific expense category
 
 ```bash
 git clone https://github.com/Piyushkumarsaini/expense_tracker.git
-cd expense_teacker
+cd expense_tracker
 ```
 
 2. **Create Virtual Environment**
