@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Category</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/categories_edit.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Category</h1>
+        
+        <!-- Edit Category Form -->
+        <div class="edit-category">
+            <form id="category-form" method="POST" action="{% url 'categories_edit' category.id %}">
+                {% csrf_token %}
+                <!-- show current name in input -->
+                <input type="text" id="change_name" name="change_name" 
+                       value="{{ category.categories_name }}" 
+                       placeholder="Enter category name" class="category-input" required>
+                
+                <div class="actions">
+                    <button type="submit" class="btn btn-save">Save Changes</button>
+                    <a href="{% url 'category_show' %}" class="btn btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

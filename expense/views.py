@@ -55,5 +55,7 @@ from django.contrib.auth.hashers import make_password
 #         except Income.DoesNotExist:
 #             return JsonResponse({'error': 'Income not found'}, status=400)
 #         except IncomeCategory.DoesNotExist:
-#             return JsonResponse({'error': 'Income category does not exist'}, status=400)
+#             return JsonResponse({'error': 'Income category does not exist'}, status=400
+
+
         

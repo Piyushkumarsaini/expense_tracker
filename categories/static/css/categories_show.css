@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #555;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.add-category {
+    margin-bottom: 30px;
+}
+
+.add-category form {
+    display: flex;
+    gap: 10px;
+}
+
+.category-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.category-input:focus {
+    border-color: #007bff;
+}
+
+.btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-add:hover {
+    background-color: #218838;
+}
+
+.categories-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.categories-list th,
+.categories-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.categories-list th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+}
+
+.categories-list tr:hover {
+    background-color: #f1f1f1;
+}
+
+.categories-list td {
+    color: #333;
+}
+
+.categories-list td button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.categories-list td button:first-child {
+    background-color: #007bff;
+    color: #fff;
+    margin-right: 8px;
+}
+
+.categories-list td button:first-child:hover {
+    background-color: #0056b3;
+}
+
+.categories-list td button:last-child {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.categories-list td button:last-child:hover {
+    background-color: #c82333;
+}

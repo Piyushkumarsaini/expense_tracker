@@ -110,12 +110,12 @@ class Signup(View):
             return JsonResponse({'error':'Password must contain at least one number!'}, status=400)
 
         # passwor must contain at least one specilal character
-        elif not re.search(r'[!@#$%^&*(),.?":{}|<>]',password):
-            return JsonResponse({'error':'Password must contain at least one specilal character!'}, status=400)
+        # elif not re.search(r'[!@#$%^&*(),.?":{}|<>]',password):
+        #     return JsonResponse({'error':'Password must contain at least one specilal character!'}, status=400)
 
-        # passwor must contain at least one specilal character
-        elif not re.search(r'[!@#$%^&*(),.?":{}|<>]',password):
-            return JsonResponse({'error':'Password must contain at least one specilal character!'}, status=400)
+        # # passwor must contain at least one specilal character
+        # elif not re.search(r'[!@#$%^&*(),.?":{}|<>]',password):
+        #     return JsonResponse({'error':'Password must contain at least one specilal character!'}, status=400)
 
         # Password cannot be same as username
         elif password.lower() == username.lower():
