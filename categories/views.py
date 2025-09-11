@@ -55,32 +55,6 @@ class CategoriesShow(View):
             new_category.save()
             return redirect('category_show')
     
-    
-# @method_decorator(csrf_exempt,name='dispatch')
-# class CategoriesAdd(View):
-#     def get(self,request):
-#         return render(request, 'categories_add.html')
-    
-#     def post(self,request):
-#         # user_id = request.session.get('user_id')
-#         #------------------------------------------------ pass data for json----------------------------------------------
-#         if request.content_type == 'application/json':
-#             try:
-#                 data = json.loads(request.body.decode('utf-8'))
-#             except json.JSONDecodeError:
-#                 return JsonResponse({'error': 'Invalid Json Data'}, status=400)
-#         else:
-#             data = request.POST
-#         category_name = data.get('name')
-#         if not category_name:
-#             return JsonResponse({'error': 'categroy name required'}, status= 400)
-        
-#         save_income_datiles = Category.objects.create(
-#             categories=category_name
-#             )
-#         save_income_datiles.save()
-#         return redirect('category_show')
-
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CategoriesEdit(View):
@@ -97,7 +71,6 @@ class CategoriesEdit(View):
         if request.content_type == 'application/json':
             try:
                 data = json.loads(request.body.decode('utf-8'))
-                print(data)
             except json.JSONDecodeError:
                 return JsonResponse({'error': 'Invalid Json Data'}, status=400)
         else:
@@ -124,7 +97,6 @@ class CategoriesEdit(View):
         
 @method_decorator(csrf_exempt,name='dispatch')
 class CategoriesDelete(View):
-    
     def post(self, request, category_id):
         try:
             fatch_category = Category.objects.get(id=category_id)

@@ -3,7 +3,7 @@ from . import views
 from .view.signup import *
 from .view.login import *
 from .view.forgottpassword import *
-from .view.categories import *
+# from .view.categories import *
 from .view.payment_method import *
 from .view.dashboard import *
 from .view.all_transaction_history import *
@@ -18,10 +18,6 @@ urlpatterns = [
     path('dashboard/',DashBoard.as_view(), name='dashboard'),
     path('transaction_history/',AllTransactionHistory.as_view(), name='transaction_history'),
     path('add_transaction/',AddTransaction.as_view(), name='add_transaction'),
-    # path("categories_add/", CategoriesAdd.as_view(), name="categories_add"),
-    # path("categories/", CategoriesShow.as_view(), name="category_show"),
-    # path("categories/edit/<int:category_id>/", CategoriesEdit.as_view(), name="categories_edit"),
-    # path("categories/delete/<int:category_id>/", CategoriesDelete.as_view(), name="categories_delete"),
     # path('aaa/',views.aaaaaaaa,name='aa'),
 
 

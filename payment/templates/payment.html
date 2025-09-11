@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments Management</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Payments Management</h1>
+        
+        <!-- Add New Category Section -->
+        <div class="add-payment">
+            <h2>Add New Payment</h2>
+            <form id="payment-form" method="POST" action="{% url 'payment_show' %}">
+                {% csrf_token %}
+                <input type="text" id="name" name="name" placeholder="Enter Payment Name" class="payment-input" required>
+                <button type="submit" class="btn btn-add">Add Payment</button>
+            </form>
+        </div>
+        <!-- Categories List -->
+        <div class="payment-list">
+            <h2>Existing Payment</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Payment Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ payment.payment_name }}</td>
+                        <td>
+
+                        <td>
+                            <!-- Edit button -->
+                            <form action="{% url 'payment_edit' payment.id %}" method="GET">
+                                <button type="submit" class="btn btn-update">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <!-- Delete button -->
+                            <form action="{% url 'payment_delete' payment.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
