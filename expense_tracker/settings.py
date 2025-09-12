@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'expense',
     'categories',
     'payment',
+    'transaction',
 ]
 
 MIDDLEWARE = [
