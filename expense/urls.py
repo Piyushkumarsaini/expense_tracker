@@ -4,7 +4,7 @@ from .view.signup import *
 from .view.login import *
 from .view.forgottpassword import *
 # from .view.categories import *
-from .view.payment_method import *
+# from .view.payment_method import *
 from .view.dashboard import *
 from .view.all_transaction_history import *
 from .view.transactionadd import *
@@ -32,7 +32,7 @@ urlpatterns = [
     # path('expense/<int:user_id>/delete/<int:expense_id>', ExpenseDetail.as_view(), name='expense_delete'),
     # path('expense/<int:user_id>/update/<int:expense_id>', ExpenseDetail.as_view(), name='expense_update'),
     # path('total/<int:user_id>',Total.as_view(), name='expense_add'),
-    path('tom/',PaymentMethodDetileAdd.as_view(), name='expense_add'),
+    # path('tom/',PaymentMethodDetileAdd.as_view(), name='expense_add'),
     # path('',views.tom1)
 
 ]
