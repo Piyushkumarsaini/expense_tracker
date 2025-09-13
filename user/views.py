@@ -16,7 +16,6 @@ import re
 class Signup(View):
     def get(self, request):
          return render(request, 'signup.html')
-    
 
 
     def post(self,request):

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from user.models import User
 from django.contrib.auth.hashers import check_password
 import json
@@ -10,10 +10,12 @@ from django.views import View
 
 
 
-# @method_decorator(csrf_exempt,name='dispatch')
+
+@method_decorator(csrf_exempt,name='dispatch')
 class Login(View):
     def get(self, request):
-        return render(request, 'login.html')
+        # return HttpResponse('hello')
+        return render(request, 'userlogin.html')
     
     def post(self,request):
 
