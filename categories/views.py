@@ -12,12 +12,12 @@ from django.core.exceptions import ObjectDoesNotExist
 @method_decorator(csrf_exempt,name='dispatch')
 class CategoriesShow(View):
     def get (self, request):
-        # user_id = request.session.get('user_id')
+        user_id = request.session.get('user_id')
 
-        # try:
-        #     user = User.objects.get(id=user_id)
-        # except ObjectDoesNotExist:
-        #     return render(request, 'login.html')
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return render(request, 'login.html')
         
         try:
             fatch_categories = Category.objects.all()
@@ -38,22 +38,31 @@ class CategoriesShow(View):
             return JsonResponse({'error': 'category not found'}, status=400)
 
     def post(self, request):
-            """Handle adding a new category (form POST)"""
-            if request.content_type == 'application/json':
-                try:
-                    data = json.loads(request.body.decode('utf-8'))
-                except json.JSONDecodeError:
-                    return JsonResponse({'error': 'Invalid JSON'}, status=400)
-            else:
-                data = request.POST
+    
+        user_id = request.session.get('user_id')
 
-            category_name = data.get('name')
-            if not category_name:
-                return JsonResponse({'error': 'Category name required'}, status=400)
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return render(request, 'login.html')
+        
+        
+        """Handle adding a new category (form POST)"""
+        if request.content_type == 'application/json':
+            try:
+                data = json.loads(request.body.decode('utf-8'))
+            except json.JSONDecodeError:
+                return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        else:
+            data = request.POST
 
-            new_category = Category.objects.create(categories=category_name)
-            new_category.save()
-            return redirect('category_show')
+        category_name = data.get('name')
+        if not category_name:
+            return JsonResponse({'error': 'Category name required'}, status=400)
+
+        new_category = Category.objects.create(user=user,categories=category_name)
+        new_category.save()
+        return redirect('category_show')
     
 
 @method_decorator(csrf_exempt, name='dispatch')

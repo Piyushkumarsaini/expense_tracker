@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import PaymentMethod
+from user.models import User
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
 @method_decorator(csrf_exempt,name='dispatch')
 class PaymentShow(View):
     def get(self,request):
+            
+        user_id = request.session.get('user_id')
+
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return render(request, 'login.html')
+        
         try:
             fatch_category = PaymentMethod.objects.all()
 
@@ -31,23 +41,30 @@ class PaymentShow(View):
 
 
     def post(self, request):
-            """Handle adding a new category (form POST)"""
-            if request.content_type == 'application/json':
-                try:
-                    data = json.loads(request.body.decode('utf-8'))
-                except json.JSONDecodeError:
-                    return JsonResponse({'error': 'Invalid JSON'}, status=400)
-            else:
-                data = request.POST
+        user_id = request.session.get('user_id')
 
-            payment_name = data.get('name')
-            if not payment_name:
-                return JsonResponse({'error': 'Category name required'}, status=400)
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return render(request, 'login.html')        
+        
+        """Handle adding a new category (form POST)"""
+        if request.content_type == 'application/json':
+            try:
+                data = json.loads(request.body.decode('utf-8'))
+            except json.JSONDecodeError:
+                return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        else:
+            data = request.POST
 
-            payment = PaymentMethod.objects.create(payment_method=payment_name)
-            # print(payment)
-            payment.save()
-            return redirect('payment_show')
+        payment_name = data.get('name')
+        if not payment_name:
+            return JsonResponse({'error': 'Category name required'}, status=400)
+
+        payment = PaymentMethod.objects.create(user=user,payment_method=payment_name)
+        # print(payment)
+        payment.save()
+        return redirect('payment_show')
 
 
 @method_decorator(csrf_exempt,name='dispatch')
