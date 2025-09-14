@@ -34,9 +34,9 @@ class AddTransaction(View):
         # All available payment methods
         all_payment_methods = PaymentMethod.objects.all()
 
-        assigned_methods = PaymentMethod.objects.filter(user_id=user).values_list('payment_method_id', flat=True)
+        assigned_methods = PaymentMethod.objects.filter(user=user).values_list('id', flat=True)
 
-        return render(request, 'transaction_add.html', {
+        return render(request, 'transaction.html', {
             'categories': categories,
             'payment_methods': all_payment_methods,
             'assigned_methods': list(assigned_methods),   
