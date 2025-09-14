@@ -6,7 +6,7 @@ from user.models import User
 
 
 class Income(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     type = models.CharField(max_length=10)
     category = models.ForeignKey(Category,on_delete=models.SET_NULL, null=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
@@ -21,7 +21,7 @@ class Income(models.Model):
 
 
 class Expense(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     type = models.CharField(max_length=10)
     category = models.ForeignKey(Category,on_delete=models.SET_NULL, null=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)

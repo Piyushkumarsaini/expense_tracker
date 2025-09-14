@@ -5,7 +5,7 @@ from . import views
 from .view.forgottpassword import *
 # from .view.categories import *
 # from .view.payment_method import *
-from .view.dashboard import *
+# from .view.dashboard import *
 from .view.all_transaction_history import *
 # from .view.transactionadd import *
 
@@ -15,7 +15,7 @@ urlpatterns = [
     # path('login/',Login.as_view(), name='login'),
     path('verify_email/',VerifyEmail.as_view(), name='verify_email'),
     path('reset_password/',SetNewPassword.as_view(), name='reset_password'),
-    path('dashboard/',DashBoard.as_view(), name='dashboard'),
+    # path('dashboard/',DashBoard.as_view(), name='dashboard'),
     path('transaction_history/',AllTransactionHistory.as_view(), name='transaction_history'),
     # path('add_transaction/',AddTransaction.as_view(), name='add_transaction'),
     # path('aaa/',views.aaaaaaaa,name='aa'),

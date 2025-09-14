@@ -72,8 +72,8 @@ class AddTransaction(View):
             return JsonResponse({'error': 'Missing required fields'}, status=400)
 
         try:
-            fetch_category = IncomeCategory.objects.get(id=category_id)
-            fetch_payment = UserPaymentMethod.objects.get(id=payment_method_id)
+            fetch_category = Income.objects.get(id=category_id)
+            fetch_payment = PaymentMethod.objects.get(id=payment_method_id)
         except ObjectDoesNotExist:
             return JsonResponse({'error': 'Invalid category or payment method'}, status=400)
 
@@ -105,8 +105,8 @@ class AddTransaction(View):
             return JsonResponse({'error': 'Invalid transaction type'}, status=400)
 
         # Fetch updated categories and payment methods for the template
-        categories = IncomeCategory.objects.all()
-        payment_methods = UserPaymentMethod.objects.all()
+        categories = Income.objects.all()
+        payment_methods = PaymentMethod.objects.all()
         total_income_data = Income.objects.filter(user_id=user).aggregate(total_income=Sum('amount'))
         total_expense_data = Expense.objects.filter(user_id=user).aggregate(total_expense=Sum('amount'))
         total_expense = total_expense_data['total_expense'] or 0
