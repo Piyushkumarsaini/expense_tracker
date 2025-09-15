@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = {
             type: document.getElementById('type').value,
             category: document.getElementById('category').value,
-            payment_method: document.getElementById('payment_method').value,
+            payment_method: document.getElementById('payment-method').value,
             amount: document.getElementById('amount').value,
             description: document.getElementById('description').value || ''
         };

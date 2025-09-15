@@ -29,6 +29,7 @@ class AddTransaction(View):
 
         # Fetch categories and payment methods from the database
         categories = Category.objects.all()
+        print(categories)
         # payment_methods = UserPaymentMethod.objects.all()
 
         # All available payment methods
