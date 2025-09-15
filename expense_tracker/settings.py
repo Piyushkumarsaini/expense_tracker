@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'user',
     'login',
     'dashboard',
+    'history',
 ]
 
 MIDDLEWARE = [
