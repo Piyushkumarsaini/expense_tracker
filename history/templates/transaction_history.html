@@ -28,12 +28,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/transaction_history/">
+                    <a href="/history/">
                         <i class="fas fa-history"></i> Transactions History
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/add_transaction/">
+                    <a href="/transaction/">
                         <i class="fas fa-plus"></i> Add Transaction
                     </a>
                 </li>
@@ -62,7 +62,7 @@
                 {% csrf_token %}
                 <div class="filters">
                     <div class="filter-group">
-                        <label for="type-filter">Type:</label>
+                        <label for="type-filter">Type</label>
                         <select id="type-filter" name="type" onchange="this.form.submit()">
                             <option value="all" {% if type_filter == 'all' %}selected{% endif %}>All</option>
                             <option value="income" {% if type_filter == 'income' %}selected{% endif %}>Income</option>
@@ -70,16 +70,17 @@
                         </select>
                     </div>
                 <div class="filter-group">
-                    <label for="category">Category:</label>
+                    <label for="category">Category</label>
                     <select id="category" name="category" required>
                         <option value="" disabled selected>Select Category</option>
                         {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.income_category }}</option>
+                            <option value="{{ category.id }}">{{ category.categories }}</option>
                         {% endfor %}
                     </select>
+
                 </div>
                 <div class="filter-group">
-                    <label for="payment-method">Payment Method:</label>
+                    <label for="payment-method">Payment Method</label>
                     <select id="payment-method" name="payment_method" required>
                         <option value="" disabled selected>Select Payment Method</option>
                         {% for method in payment_methods %}
@@ -87,10 +88,10 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="filter-group">
+                {% comment %} <div class="filter-group">
                     <label for="date-filter">Date:</label>
                     <input type="date" id="date-filter">
-                </div>
+                </div> {% endcomment %}
             </div>
 
             <!-- History Table -->
