@@ -29,7 +29,6 @@ class AddTransaction(View):
 
         # Fetch categories and payment methods from the database
         categories = Category.objects.all()
-        print(categories)
         # payment_methods = UserPaymentMethod.objects.all()
 
         # All available payment methods
@@ -62,7 +61,9 @@ class AddTransaction(View):
         else:
             data = request.POST
 
-        # Validate and convert data
+        # # Debug
+        # print("Received data:", data)
+
         transaction_type = data.get('type')
         category_id = data.get('category')
         payment_method_id = data.get('payment_method')
@@ -73,56 +74,35 @@ class AddTransaction(View):
             return JsonResponse({'error': 'Missing required fields'}, status=400)
 
         try:
-            fetch_category = Income.objects.get(id=category_id)
-            fetch_payment = PaymentMethod.objects.get(id=payment_method_id)
-        except ObjectDoesNotExist:
-            return JsonResponse({'error': 'Invalid category or payment method'}, status=400)
+            fetch_category = Category.objects.get(id=int(category_id))
+        except (Category.DoesNotExist, ValueError, TypeError):
+            return JsonResponse({'error': 'Invalid category'}, status=400)
+
+        try:
+            fetch_payment = PaymentMethod.objects.get(id=int(payment_method_id))
+        except (PaymentMethod.DoesNotExist, ValueError, TypeError):
+            return JsonResponse({'error': 'Invalid payment method'}, status=400)
+
 
         if transaction_type == 'income':
-            save_income_datiles = Income.objects.create(
+            Income.objects.create(
                 user_id=user,
                 type=transaction_type,
                 category=fetch_category,
                 payment_method=fetch_payment,
                 amount=amount,
                 description=description
-                )
-            
-            save_income_datiles.save()
-
+            )
         elif transaction_type == 'expense':
-            save_expense_details = Expense.objects.create(
+            Expense.objects.create(
                 user_id=user,
                 type=transaction_type,
                 category=fetch_category,
                 payment_method=fetch_payment,
                 amount=amount,
                 description=description
-                )
-            print(save_expense_details)
-            save_expense_details.save()
-
+            )
         else:
             return JsonResponse({'error': 'Invalid transaction type'}, status=400)
 
-        # Fetch updated categories and payment methods for the template
-        categories = Income.objects.all()
-        payment_methods = PaymentMethod.objects.all()
-        total_income_data = Income.objects.filter(user_id=user).aggregate(total_income=Sum('amount'))
-        total_expense_data = Expense.objects.filter(user_id=user).aggregate(total_expense=Sum('amount'))
-        total_expense = total_expense_data['total_expense'] or 0
-        total_income = total_income_data['total_income'] or 0
-        total = total_expense + total_income
-
-        return render(request, 'transaction_add.html', {
-            'categories': categories,
-            'payment_methods': payment_methods,
-            'total_income': total_income,
-            'total_expense': total_expense,
-            'total': total,
-            'success_message': 'Transaction added successfully!'  # Optional success feedback
-        })
-
-# # Helper function to get CSRF token (if needed for AJAX)
-# def get_cookie(request, cookie_name):
-#     return request.COOKIES.get(cookie_name)
+        return JsonResponse({'success': 'Transaction added successfully!'})
