@@ -105,4 +105,4 @@ class AddTransaction(View):
         else:
             return JsonResponse({'error': 'Invalid transaction type'}, status=400)
 
-        return JsonResponse({'success': 'Transaction added successfully!'})
+        return redirect('add_transaction')
